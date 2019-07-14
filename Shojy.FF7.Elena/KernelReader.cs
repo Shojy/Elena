@@ -39,6 +39,25 @@ namespace Shojy.FF7.Elena
         public ItemData ItemData { get; set; }
         public WeaponData WeaponData { get; protected set; }
 
+        public TextSection CommandDescriptions { get; protected set; }
+        public TextSection MagicDescriptions { get; protected set; }
+        public TextSection ItemDescriptions { get; protected set; }
+        public TextSection WeaponDescriptions { get; protected set; }
+        public TextSection ArmorDescriptions { get; protected set; }
+        public TextSection AccessoryDescriptions { get; protected set; }
+        public TextSection MateriaDescriptions { get; protected set; }
+        public TextSection KeyItemDescriptions { get; protected set; }
+        public TextSection CommandNames { get; protected set; }
+        public TextSection MagicNames { get; protected set; }
+        public TextSection ItemNames { get; protected set; }
+        public TextSection WeaponNames { get; protected set; }
+        public TextSection ArmorNames { get; protected set; }
+        public TextSection AccessoryNames { get; protected set; }
+        public TextSection MateriaNames { get; protected set; }
+        public TextSection KeyItemNames { get; protected set; }
+        public TextSection BattleText { get; protected set; }
+        public TextSection SummonAttackNames { get; protected set; }
+
         #endregion Public Properties
 
         #region Private Methods
@@ -92,8 +111,30 @@ namespace Shojy.FF7.Elena
 
         private void LoadSections()
         {
+
+            this.CommandDescriptions = new TextSection(this._kernelData[KernelSection.CommandDescriptions]);
+            this.MagicDescriptions = new TextSection(this._kernelData[KernelSection.MagicDescriptions]);
+            this.ItemDescriptions = new TextSection(this._kernelData[KernelSection.ItemDescriptions]);
+            this.WeaponDescriptions = new TextSection(this._kernelData[KernelSection.WeaponDescriptions]);
+            this.ArmorDescriptions = new TextSection(this._kernelData[KernelSection.ArmorDescriptions]);
+            this.AccessoryDescriptions = new TextSection(this._kernelData[KernelSection.AccessoryDescriptions]);
+            this.MateriaDescriptions = new TextSection(this._kernelData[KernelSection.MateriaDescriptions]);
+            this.KeyItemDescriptions = new TextSection(this._kernelData[KernelSection.KeyItemDescriptions]);
+            this.CommandNames = new TextSection(this._kernelData[KernelSection.CommandNames]);
+            this.MagicNames = new TextSection(this._kernelData[KernelSection.MagicNames]);
+            this.ItemNames = new TextSection(this._kernelData[KernelSection.ItemNames]);
+            this.WeaponNames = new TextSection(this._kernelData[KernelSection.WeaponNames]);
+            this.ArmorNames = new TextSection(this._kernelData[KernelSection.ArmorNames]);
+            this.AccessoryNames = new TextSection(this._kernelData[KernelSection.AccessoryNames]);
+            this.MateriaNames = new TextSection(this._kernelData[KernelSection.MateriaNames]);
+            this.KeyItemNames = new TextSection(this._kernelData[KernelSection.KeyItemNames]);
+            this.BattleText = new TextSection(this._kernelData[KernelSection.BattleText]);
+            this.SummonAttackNames = new TextSection(this._kernelData[KernelSection.SummonAttackNames]);
+
+
             this.WeaponData = new WeaponData(this._kernelData[KernelSection.WeaponData]);
             this.ItemData = new ItemData(this._kernelData[KernelSection.ItemData]);
+
         }
 
         #endregion Private Methods
