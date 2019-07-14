@@ -84,10 +84,11 @@ namespace Shojy.FF7.Elena.Sections
 
                     for (var i = 0; i < lookupLength; ++i)
                     {
-                        var pos = index - lookupOffset + i;
+                        var pos = index - 1 - lookupOffset + i;
                         try
                         {
-                            text.Add(text[pos]);
+                            if(data[pos] != 0xFF)
+                                text.Add(data[pos]);
                         }
                         catch (ArgumentOutOfRangeException)
                         {
