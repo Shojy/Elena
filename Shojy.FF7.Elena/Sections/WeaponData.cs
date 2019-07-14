@@ -7,20 +7,26 @@ namespace Shojy.FF7.Elena.Sections
 {
     public class WeaponData
     {
+        private const int WeaponSize = 44;
         private readonly byte[] _sectionData;
-        public Weapon[] Weapons;
+        public Weapon[] Weapons { get; }
 
         public WeaponData(byte[] sectionData)
         {
             this._sectionData = sectionData;
 
-            var count = sectionData.Length / 44;
+            var count = sectionData.Length / WeaponSize;
             var weapons = new Weapon[count];
 
             for (var wpn = 0; wpn < count; ++wpn)
             {
                 var wpnBytes = new byte[44];
-                Array.Copy(sectionData, wpn * 44, wpnBytes, 0, 44);
+                Array.Copy(
+                    sectionData, 
+                    wpn * WeaponSize, 
+                    wpnBytes, 
+                    0, 
+                    WeaponSize);
                 weapons[wpn] = this.ParseWeaponData(wpnBytes);
 
             }
