@@ -26,7 +26,7 @@ namespace Shojy.FF7.Elena.Sections
 
             for (var wpn = 0; wpn < count; ++wpn)
             {
-                var wpnBytes = new byte[44];
+                var wpnBytes = new byte[WeaponSize];
                 Array.Copy(
                     sectionData,
                     wpn * WeaponSize,
