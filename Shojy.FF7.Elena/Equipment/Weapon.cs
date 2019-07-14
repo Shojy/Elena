@@ -7,6 +7,7 @@ namespace Shojy.FF7.Elena.Equipment
 {
     public class Weapon
     {
+        public int Index { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public TargetData Targets { get; set; }

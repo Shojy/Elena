@@ -5,6 +5,7 @@ namespace Shojy.FF7.Elena.Items
 {
     public class Item
     {
+        public int Index { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public Restrictions Restrictions { get; set; }
