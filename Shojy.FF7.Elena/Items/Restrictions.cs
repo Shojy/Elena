@@ -3,7 +3,7 @@
 namespace Shojy.FF7.Elena.Items
 {
     [Flags]
-    public enum Restrictions
+    public enum Restrictions : ushort
     {
         CanBeSold = 1,
         CanBeUsedInBattle = 2,

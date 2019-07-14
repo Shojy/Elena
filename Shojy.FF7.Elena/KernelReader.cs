@@ -1,18 +1,21 @@
-﻿using System;
+﻿using Shojy.FF7.Elena.Sections;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Runtime.CompilerServices;
-using Shojy.FF7.Elena.Sections;
 
 namespace Shojy.FF7.Elena
 {
     public class KernelReader
     {
-        public WeaponData WeaponData { get; protected set; }
+        #region Private Fields
 
         private Dictionary<KernelSection, byte[]> _kernelData;
         private KernelType _kernelFile;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public KernelReader(string filePath, KernelType kernelFile = KernelType.KernelBin)
         {
@@ -29,11 +32,16 @@ namespace Shojy.FF7.Elena
             this.LoadSections();
         }
 
-        private void LoadSections()
-        {
-            this.WeaponData = new WeaponData(this._kernelData[KernelSection.WeaponData]);
-        }
+        #endregion Public Constructors
 
+        #region Public Properties
+
+        public ItemData ItemData { get; set; }
+        public WeaponData WeaponData { get; protected set; }
+
+        #endregion Public Properties
+
+        #region Private Methods
 
         private static Dictionary<KernelSection, byte[]> Decompress(string path)
         {
@@ -69,12 +77,11 @@ namespace Shojy.FF7.Elena
                 }
                 return sections;
             }
-
         }
 
         private static byte[] DecompressSection(byte[] compressedSection)
         {
-            using(var compressedStream = new MemoryStream(compressedSection))
+            using (var compressedStream = new MemoryStream(compressedSection))
             using (var gzip = new GZipStream(compressedStream, CompressionMode.Decompress))
             using (var decompressedStream = new MemoryStream())
             {
@@ -82,5 +89,13 @@ namespace Shojy.FF7.Elena
                 return decompressedStream.ToArray();
             }
         }
+
+        private void LoadSections()
+        {
+            this.WeaponData = new WeaponData(this._kernelData[KernelSection.WeaponData]);
+            this.ItemData = new ItemData(this._kernelData[KernelSection.ItemData]);
+        }
+
+        #endregion Private Methods
     }
 }
