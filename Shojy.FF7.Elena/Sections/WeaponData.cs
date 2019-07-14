@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Shojy.FF7.Elena.Battle;
 using Shojy.FF7.Elena.Equipment;
 using Shojy.FF7.Elena.Items;
@@ -11,7 +13,7 @@ namespace Shojy.FF7.Elena.Sections
         private readonly byte[] _sectionData;
         public Weapon[] Weapons { get; }
 
-        public WeaponData(byte[] sectionData)
+        public WeaponData(byte[] sectionData, string[] names)
         {
             this._sectionData = sectionData;
 
@@ -28,6 +30,11 @@ namespace Shojy.FF7.Elena.Sections
                     0, 
                     WeaponSize);
                 weapons[wpn] = this.ParseWeaponData(wpnBytes);
+
+                if (wpn < names.Length)
+                {
+                    weapons[wpn].Name = names[wpn];
+                }
 
             }
             this.Weapons = weapons;

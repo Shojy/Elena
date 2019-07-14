@@ -9,7 +9,7 @@ namespace Shojy.FF7.Elena.Sections
         private const int ItemSize = 28;
         public Item[] Items { get; }
         private byte[] _sectionData;
-        public ItemData(byte[] sectionData)
+        public ItemData(byte[] sectionData, string[] names)
         {
             this._sectionData = sectionData;
 
@@ -27,9 +27,15 @@ namespace Shojy.FF7.Elena.Sections
                     ItemSize);
                 items[i] = this.ParseItemData(itemBytes);
 
+                if (i < names.Length)
+                {
+                    items[i].Name = names[i];
+                }
+
             }
 
             this.Items = items;
+
         }
 
         private Item ParseItemData(byte[] data)

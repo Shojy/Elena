@@ -5,6 +5,8 @@ namespace Shojy.FF7.Elena.Items
 {
     public class Item
     {
+        public string Name { get; set; }
+        public string Description { get; set; }
         public Restrictions Restrictions { get; set; }
         public ushort CameraMovementId { get; set; }
         public TargetData TargetData { get; set; }

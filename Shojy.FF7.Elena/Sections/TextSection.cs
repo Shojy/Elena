@@ -13,7 +13,7 @@ namespace Shojy.FF7.Elena.Sections
         private const byte LookupCommand = 0xF9;
         private readonly byte[] _sectionData;
 
-        public List<string> Strings { get; }
+        public string[] Strings { get; }
 
         #endregion Private Fields
 
@@ -34,7 +34,7 @@ namespace Shojy.FF7.Elena.Sections
             this.Strings = ExtractStrings(decompressedData);
         }
 
-        private static List<string> ExtractStrings(byte[] data)
+        private static string[] ExtractStrings(byte[] data)
         {
             var strings = new List<string>();
 
@@ -58,7 +58,7 @@ namespace Shojy.FF7.Elena.Sections
                 }
             }
 
-            return strings;
+            return strings.ToArray();
         }
 
         private static byte[] DecompressText(byte[] data)

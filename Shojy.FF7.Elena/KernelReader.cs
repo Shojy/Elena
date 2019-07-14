@@ -132,8 +132,8 @@ namespace Shojy.FF7.Elena
             this.SummonAttackNames = new TextSection(this._kernelData[KernelSection.SummonAttackNames]);
 
 
-            this.WeaponData = new WeaponData(this._kernelData[KernelSection.WeaponData]);
-            this.ItemData = new ItemData(this._kernelData[KernelSection.ItemData]);
+            this.WeaponData = new WeaponData(this._kernelData[KernelSection.WeaponData], this.WeaponNames.Strings);
+            this.ItemData = new ItemData(this._kernelData[KernelSection.ItemData], this.ItemNames.Strings);
 
         }
 
