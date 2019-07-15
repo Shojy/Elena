@@ -36,6 +36,7 @@ namespace Shojy.FF7.Elena
 
         #region Public Properties
 
+        public AccessoryData AccessoryData { get; protected set; }
         public TextSection AccessoryDescriptions { get; protected set; }
         public TextSection AccessoryNames { get; protected set; }
         public ArmorData ArmorData { get; protected set; }
@@ -51,11 +52,11 @@ namespace Shojy.FF7.Elena
         public TextSection KeyItemNames { get; protected set; }
         public TextSection MagicDescriptions { get; protected set; }
         public TextSection MagicNames { get; protected set; }
+        public MateriaData MateriaData { get; protected set; }
         public TextSection MateriaDescriptions { get; protected set; }
         public TextSection MateriaNames { get; protected set; }
         public TextSection SummonAttackNames { get; protected set; }
         public WeaponData WeaponData { get; protected set; }
-        public AccessoryData AccessoryData { get; protected set; }
         public TextSection WeaponDescriptions { get; protected set; }
         public TextSection WeaponNames { get; protected set; }
 
@@ -150,6 +151,11 @@ namespace Shojy.FF7.Elena
                 this._kernelData[KernelSection.AccessoryData],
                 this.AccessoryNames.Strings,
                 this.AccessoryDescriptions.Strings);
+
+            this.MateriaData = new MateriaData(
+                this._kernelData[KernelSection.MateriaData],
+                this.MateriaNames.Strings,
+                this.MateriaDescriptions.Strings);
         }
 
         #endregion Private Methods
