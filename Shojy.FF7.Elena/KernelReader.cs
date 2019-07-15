@@ -10,7 +10,7 @@ namespace Shojy.FF7.Elena
     {
         #region Private Fields
 
-        private Dictionary<KernelSection, byte[]> _kernelData;
+        private readonly Dictionary<KernelSection, byte[]> _kernelData;
         private KernelType _kernelFile;
 
         #endregion Private Fields
@@ -55,6 +55,7 @@ namespace Shojy.FF7.Elena
         public TextSection MateriaNames { get; protected set; }
         public TextSection SummonAttackNames { get; protected set; }
         public WeaponData WeaponData { get; protected set; }
+        public AccessoryData AccessoryData { get; protected set; }
         public TextSection WeaponDescriptions { get; protected set; }
         public TextSection WeaponNames { get; protected set; }
 
@@ -144,6 +145,11 @@ namespace Shojy.FF7.Elena
                 this._kernelData[KernelSection.ArmorData],
                 this.ArmorNames.Strings,
                 this.ArmorDescriptions.Strings);
+
+            this.AccessoryData = new AccessoryData(
+                this._kernelData[KernelSection.AccessoryData],
+                this.AccessoryNames.Strings,
+                this.AccessoryDescriptions.Strings);
         }
 
         #endregion Private Methods
