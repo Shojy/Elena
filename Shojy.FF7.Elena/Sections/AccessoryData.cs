@@ -9,7 +9,9 @@ namespace Shojy.FF7.Elena.Sections
     public class AccessoryData
     {
         #region Private Fields
-
+        /// <summary>
+        /// Size of the accessory data block in bytes
+        /// </summary>
         private const int AccessorySize = 16;
         private byte[] _sectionData;
 
@@ -17,6 +19,12 @@ namespace Shojy.FF7.Elena.Sections
 
         #region Public Constructors
 
+        /// <summary>
+        /// Creates a new instance of the accessory data section
+        /// </summary>
+        /// <param name="sectionData"></param>
+        /// <param name="names"></param>
+        /// <param name="descriptions"></param>
         public AccessoryData(byte[] sectionData, IReadOnlyList<string> names, IReadOnlyList<string> descriptions)
         {
             this._sectionData = sectionData;
@@ -47,26 +55,36 @@ namespace Shojy.FF7.Elena.Sections
 
         #region Public Properties
 
+        /// <summary>
+        /// A list of all loaded accessories found in the kernel file.
+        /// </summary>
         public Accessory[] Accessories { get; set; }
 
         #endregion Public Properties
 
         #region Private Methods
 
+        /// <summary>
+        /// Creates an accessory object from an individual data block
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         private static Accessory ParseData(byte[] data)
         {
-            var acc = new Accessory();
+            var acc = new Accessory
+            {
+                BoostedStat1 = (CharacterStat) data[0x0],
+                BoostedStat2 = (CharacterStat) data[0x1],
+                BoostedStat1Bonus = data[0x2],
+                BoostedStat2Bonus = data[0x3],
+                ElementalDamageModifier = (DamageModifier) data[0x4],
+                SpecialEffect = (AccessoryEffect) data[0x5],
+                ElementalDefense = (Elements) BitConverter.ToUInt16(data, 0x6),
+                StatusDefense = (EquipmentStatus) BitConverter.ToUInt32(data, 0x8),
+                EquipableBy = (EquipableBy) BitConverter.ToUInt16(data, 0xC),
+                Restrictions = (Restrictions) ~BitConverter.ToUInt16(data, 0xE)
+            };
 
-            acc.BoostedStat1 = (CharacterStat) data[0x0];
-            acc.BoostedStat2 = (CharacterStat) data[0x1];
-            acc.BoostedStat1Bonus = data[0x2];
-            acc.BoostedStat2Bonus = data[0x3];
-            acc.ElementalDamageModifier = (DamageModifier) data[0x4];
-            acc.SpecialEffect = (AccessoryEffect) data[0x5];
-            acc.ElementalDefense = (Elements) BitConverter.ToUInt16(data, 0x6);
-            acc.StatusDefense = (EquipmentStatus) BitConverter.ToUInt32(data, 0x8);
-            acc.EquipableBy = (EquipableBy) BitConverter.ToUInt16(data, 0xC);
-            acc.Restrictions = (Restrictions) ~BitConverter.ToUInt16(data, 0xE);
 
             return acc;
         }

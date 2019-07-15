@@ -6,6 +6,9 @@ using System.IO.Compression;
 
 namespace Shojy.FF7.Elena
 {
+    /// <summary>
+    /// Kernel reader used for accessing data from FF7's Kernel files.
+    /// </summary>
     public class KernelReader
     {
         #region Private Fields
@@ -17,6 +20,11 @@ namespace Shojy.FF7.Elena
 
         #region Public Constructors
 
+        /// <summary>
+        /// Creates a new instance of the Kernel file reader
+        /// </summary>
+        /// <param name="filePath">Path to the KERNEL.BIN or kernel2.bin file to open.</param>
+        /// <param name="kernelFile">Whether the file is KERNEL.BIN or kernel2.bin</param>
         public KernelReader(string filePath, KernelType kernelFile = KernelType.KernelBin)
         {
             if (kernelFile == KernelType.Kernel2Bin)
@@ -36,35 +44,135 @@ namespace Shojy.FF7.Elena
 
         #region Public Properties
 
+        /// <summary>
+        /// Kernel section 8, merged with Names (section 23) and descriptions (Section 15)
+        /// </summary>
         public AccessoryData AccessoryData { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 15
+        /// </summary>
         public TextSection AccessoryDescriptions { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 23
+        /// </summary>
         public TextSection AccessoryNames { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 7
+        /// </summary>
         public ArmorData ArmorData { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 14
+        /// </summary>
         public TextSection ArmorDescriptions { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 22
+        /// </summary>
         public TextSection ArmorNames { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 26
+        /// </summary>
         public TextSection BattleText { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 10
+        /// </summary>
         public TextSection CommandDescriptions { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 18
+        /// </summary>
         public TextSection CommandNames { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 5, merged with names (Section 20) and descriptions (section 12)
+        /// </summary>
         public ItemData ItemData { get; set; }
+
+        /// <summary>
+        /// Kernel section 12
+        /// </summary>
         public TextSection ItemDescriptions { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 20
+        /// </summary>
         public TextSection ItemNames { get; protected set; }
+
+        /// <summary>
+        /// Merged Section 25 (key Item Names) and 17 (Descriptions)
+        /// </summary>
         public KeyItemData KeyItemData { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 17
+        /// </summary>
         public TextSection KeyItemDescriptions { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 25
+        /// </summary>
         public TextSection KeyItemNames { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 19
+        /// </summary>
         public TextSection MagicDescriptions { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 24
+        /// </summary>
         public TextSection MagicNames { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 9, merged with names (section 24) and descriptions (section 16)
+        /// </summary>
         public MateriaData MateriaData { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 16
+        /// </summary>
         public TextSection MateriaDescriptions { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 24
+        /// </summary>
         public TextSection MateriaNames { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 27
+        /// </summary>
         public TextSection SummonAttackNames { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 6, merged with names (Section 21) and descriptions (section 13)
+        /// </summary>
         public WeaponData WeaponData { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 13
+        /// </summary>
         public TextSection WeaponDescriptions { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 21
+        /// </summary>
         public TextSection WeaponNames { get; protected set; }
 
         #endregion Public Properties
 
         #region Private Methods
 
+        /// <summary>
+        /// Reads a file path to a kernel file and decompresses each section
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         private static Dictionary<KernelSection, byte[]> Decompress(string path)
         {
             var kernelFile = new FileInfo(path);
@@ -101,6 +209,11 @@ namespace Shojy.FF7.Elena
             }
         }
 
+        /// <summary>
+        /// Decompresses a byte[] using the GZIP format
+        /// </summary>
+        /// <param name="compressedSection">Compressed data</param>
+        /// <returns>Decompressed data</returns>
         private static byte[] DecompressSection(byte[] compressedSection)
         {
             using (var compressedStream = new MemoryStream(compressedSection))
@@ -112,6 +225,9 @@ namespace Shojy.FF7.Elena
             }
         }
 
+        /// <summary>
+        /// Parses and loads the data of each kernel section available.
+        /// </summary>
         private void LoadSections()
         {
             this.CommandDescriptions = new TextSection(this._kernelData[KernelSection.CommandDescriptions]);
