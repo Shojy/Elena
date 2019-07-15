@@ -71,7 +71,7 @@ namespace Shojy.FF7.Elena.Sections
                 wpn.MateriaSlots[slot] = (MateriaSlot)wpnData[0x1C + slot];
             }
 
-            wpn.Restrictions = (Restrictions)wpnData[0x2B];
+            wpn.Restrictions = (Restrictions) ~BitConverter.ToUInt16(wpnData, 0x2A);
             return wpn;
         }
 

@@ -57,7 +57,7 @@ namespace Shojy.FF7.Elena.Sections
             var item = new Item();
 
             item.CameraMovementId = BitConverter.ToUInt16(data, 0x8);
-            item.Restrictions = (Restrictions)BitConverter.ToUInt16(data, 0xA);
+            item.Restrictions = (Restrictions) ~BitConverter.ToUInt16(data, 0xA);
             item.TargetData = (TargetData)data[0xC];
             item.AttackEffectId = data[0xD];
             item.DamageCalculationId = data[0xE];
