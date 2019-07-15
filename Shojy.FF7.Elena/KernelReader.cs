@@ -36,27 +36,27 @@ namespace Shojy.FF7.Elena
 
         #region Public Properties
 
-        public ItemData ItemData { get; set; }
-        public WeaponData WeaponData { get; protected set; }
-
-        public TextSection CommandDescriptions { get; protected set; }
-        public TextSection MagicDescriptions { get; protected set; }
-        public TextSection ItemDescriptions { get; protected set; }
-        public TextSection WeaponDescriptions { get; protected set; }
-        public TextSection ArmorDescriptions { get; protected set; }
         public TextSection AccessoryDescriptions { get; protected set; }
-        public TextSection MateriaDescriptions { get; protected set; }
-        public TextSection KeyItemDescriptions { get; protected set; }
-        public TextSection CommandNames { get; protected set; }
-        public TextSection MagicNames { get; protected set; }
-        public TextSection ItemNames { get; protected set; }
-        public TextSection WeaponNames { get; protected set; }
-        public TextSection ArmorNames { get; protected set; }
         public TextSection AccessoryNames { get; protected set; }
-        public TextSection MateriaNames { get; protected set; }
-        public TextSection KeyItemNames { get; protected set; }
+        public ArmorData ArmorData { get; protected set; }
+        public TextSection ArmorDescriptions { get; protected set; }
+        public TextSection ArmorNames { get; protected set; }
         public TextSection BattleText { get; protected set; }
+        public TextSection CommandDescriptions { get; protected set; }
+        public TextSection CommandNames { get; protected set; }
+        public ItemData ItemData { get; set; }
+        public TextSection ItemDescriptions { get; protected set; }
+        public TextSection ItemNames { get; protected set; }
+        public TextSection KeyItemDescriptions { get; protected set; }
+        public TextSection KeyItemNames { get; protected set; }
+        public TextSection MagicDescriptions { get; protected set; }
+        public TextSection MagicNames { get; protected set; }
+        public TextSection MateriaDescriptions { get; protected set; }
+        public TextSection MateriaNames { get; protected set; }
         public TextSection SummonAttackNames { get; protected set; }
+        public WeaponData WeaponData { get; protected set; }
+        public TextSection WeaponDescriptions { get; protected set; }
+        public TextSection WeaponNames { get; protected set; }
 
         #endregion Public Properties
 
@@ -111,7 +111,6 @@ namespace Shojy.FF7.Elena
 
         private void LoadSections()
         {
-
             this.CommandDescriptions = new TextSection(this._kernelData[KernelSection.CommandDescriptions]);
             this.MagicDescriptions = new TextSection(this._kernelData[KernelSection.MagicDescriptions]);
             this.ItemDescriptions = new TextSection(this._kernelData[KernelSection.ItemDescriptions]);
@@ -131,17 +130,20 @@ namespace Shojy.FF7.Elena
             this.BattleText = new TextSection(this._kernelData[KernelSection.BattleText]);
             this.SummonAttackNames = new TextSection(this._kernelData[KernelSection.SummonAttackNames]);
 
-
             this.WeaponData = new WeaponData(
-                this._kernelData[KernelSection.WeaponData], 
-                this.WeaponNames.Strings, 
+                this._kernelData[KernelSection.WeaponData],
+                this.WeaponNames.Strings,
                 this.WeaponDescriptions.Strings);
 
             this.ItemData = new ItemData(
-                this._kernelData[KernelSection.ItemData], 
+                this._kernelData[KernelSection.ItemData],
                 this.ItemNames.Strings,
                 this.ItemDescriptions.Strings);
 
+            this.ArmorData = new ArmorData(
+                this._kernelData[KernelSection.ArmorData],
+                this.ArmorNames.Strings,
+                this.ArmorDescriptions.Strings);
         }
 
         #endregion Private Methods

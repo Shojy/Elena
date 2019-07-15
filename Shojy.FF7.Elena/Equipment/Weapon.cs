@@ -25,14 +25,7 @@ namespace Shojy.FF7.Elena.Equipment
 
         public Weapon()
         {
-            // Default materia slots array to empty slots
-            var slots = new MateriaSlot[8];
-            for (var i = 0; i < slots.Length; ++i)
-            {
-                slots[i] = MateriaSlot.None;
-            }
-
-            this.MateriaSlots = slots;
+            this.MateriaSlots = new MateriaSlot[8];
         }
     }
 
