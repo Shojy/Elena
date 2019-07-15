@@ -48,6 +48,7 @@ namespace Shojy.FF7.Elena
         public ItemData ItemData { get; set; }
         public TextSection ItemDescriptions { get; protected set; }
         public TextSection ItemNames { get; protected set; }
+        public KeyItemData KeyItemData { get; protected set; }
         public TextSection KeyItemDescriptions { get; protected set; }
         public TextSection KeyItemNames { get; protected set; }
         public TextSection MagicDescriptions { get; protected set; }
@@ -156,6 +157,8 @@ namespace Shojy.FF7.Elena
                 this._kernelData[KernelSection.MateriaData],
                 this.MateriaNames.Strings,
                 this.MateriaDescriptions.Strings);
+
+            this.KeyItemData = new KeyItemData(this.KeyItemNames.Strings, this.KeyItemDescriptions.Strings);
         }
 
         #endregion Private Methods
