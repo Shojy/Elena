@@ -1,4 +1,4 @@
-﻿namespace Shojy.FF7.Elena.Materia
+﻿namespace Shojy.FF7.Elena.Materias
 {
     public enum MateriaType
     {

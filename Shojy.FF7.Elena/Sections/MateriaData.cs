@@ -1,6 +1,7 @@
 ﻿using Shojy.FF7.Elena.Battle;
 using System;
 using System.Collections.Generic;
+using Shojy.FF7.Elena.Materias;
 
 namespace Shojy.FF7.Elena.Sections
 {
@@ -17,10 +18,10 @@ namespace Shojy.FF7.Elena.Sections
 
         public MateriaData(byte[] sectionData, IReadOnlyList<string> names, IReadOnlyList<string> descriptions)
         {
-            this._sectionData = sectionData;
+            _sectionData = sectionData;
 
             var count = sectionData.Length / MateriaSize;
-            var materias = new Materia.Materia[count];
+            var materias = new Materia[count];
 
             for (var mat = 0; mat < count; ++mat)
             {
@@ -38,22 +39,22 @@ namespace Shojy.FF7.Elena.Sections
                 materias[mat].Description = descriptions[mat];
             }
 
-            this.Materias = materias;
+            Materias = materias;
         }
 
         #endregion Public Constructors
 
         #region Public Properties
 
-        public Materia.Materia[] Materias { get; }
+        public Materia[] Materias { get; }
 
         #endregion Public Properties
 
         #region Private Methods
 
-        private static Materia.Materia ParseData(byte[] data)
+        private static Materia ParseData(byte[] data)
         {
-            var materia = new Materia.Materia();
+            var materia = new Materia();
 
             materia.Level2AP = BitConverter.ToUInt16(data, 0x0) * 100;
             materia.Level3AP = BitConverter.ToUInt16(data, 0x2) * 100;
@@ -61,7 +62,7 @@ namespace Shojy.FF7.Elena.Sections
             materia.Level5AP = BitConverter.ToUInt16(data, 0x6) * 100;
 
             materia.Element = (MateriaElements)data[0xC];
-            materia.MateriaType = Materia.Materia.GetMateriaType(data[0xD]);
+            materia.MateriaType = Materia.GetMateriaType(data[0xD]);
             return materia;
         }
 

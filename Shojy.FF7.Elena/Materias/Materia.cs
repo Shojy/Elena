@@ -1,6 +1,6 @@
 ﻿using Shojy.FF7.Elena.Battle;
 
-namespace Shojy.FF7.Elena.Materia
+namespace Shojy.FF7.Elena.Materias
 {
     public class Materia
     {
