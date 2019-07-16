@@ -3,6 +3,7 @@
     public enum KernelType
     {
         KernelBin,
-        Kernel2Bin
+        Kernel2Bin,
+        WindowBin
     }
 }

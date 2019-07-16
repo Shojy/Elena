@@ -1,8 +1,11 @@
 ﻿using Shojy.FF7.Elena.Sections;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.IO.Compression;
+using System.Net.Mime;
+using Shojy.FF7.Elena.Compression;
 
 namespace Shojy.FF7.Elena
 {
@@ -23,21 +26,81 @@ namespace Shojy.FF7.Elena
         /// <summary>
         /// Creates a new instance of the Kernel file reader
         /// </summary>
-        /// <param name="filePath">Path to the KERNEL.BIN or kernel2.bin file to open.</param>
+        /// <param name="kernel">Path to the KERNEL.BIN or kernel2.bin file to open.</param>
         /// <param name="kernelFile">Whether the file is KERNEL.BIN or kernel2.bin</param>
-        public KernelReader(string filePath, KernelType kernelFile = KernelType.KernelBin)
+        public KernelReader(string kernel, KernelType kernelFile = KernelType.KernelBin)
         {
-            if (kernelFile == KernelType.Kernel2Bin)
+            if (kernelFile == KernelType.KernelBin)
             {
-                throw new NotSupportedException("kernel2.bin is not yet supported.");
+                // Load file and decompress
+                this._kernelData = DecompressKernel(kernel);
             }
-
-            this._kernelFile = kernelFile;
-            // Load file and decompress
-            this._kernelData = Decompress(filePath);
+            else if (kernelFile == KernelType.Kernel2Bin)
+            {
+                this._kernelData = DecompressKernel2(kernel);
+            } else {
+                throw new NotSupportedException("This type of kernel is not yet supported.");
+            }
 
             // Sections
             this.LoadSections();
+        }
+
+        public KernelReader MergeKernel2Data(string kernel2)
+        {
+            var data = DecompressKernel2(kernel2);
+
+            foreach(var pair in data)
+            {
+                if (this._kernelData.ContainsKey(pair.Key))
+                {
+                    this._kernelData[pair.Key] = pair.Value;
+                }
+                else
+                {
+                    this._kernelData.Add(pair.Key, pair.Value);
+                }
+            }
+
+            // Reload the data
+            this.LoadSections();
+            return this;
+        }
+
+        private static Dictionary<KernelSection, byte[]> DecompressKernel2(string path)
+        {
+            // kernel2.bin uses a different format for storing information. 
+            // The file is LZS-Compressed, and then uses a 4byte integer at the start of each section
+            // to specify length.
+            
+            var kernelFile = new FileInfo(path);
+            var kernelData = new Dictionary<KernelSection, byte[]>();
+
+            using (var fileStream = kernelFile.OpenRead())
+            using (var memoryStream = new MemoryStream())
+            {
+                fileStream.CopyTo(memoryStream);
+                var bytes = memoryStream.ToArray();
+
+                bytes = LzsCompression.UnLzs(ref bytes);
+
+                var length = bytes.Length;
+                var offset = 0;
+                for (var sectionIndex = 9; sectionIndex < 27 && offset < length; ++sectionIndex)
+                {
+                    // Get length of this section
+                    var len = BitConverter.ToInt32(bytes, offset);
+                    offset += 4;
+
+                    // Extract
+                    var temp = new byte[len];
+                    Array.Copy(bytes, offset, temp, 0, temp.Length);
+                    offset += len;
+                    kernelData.Add((KernelSection)sectionIndex + 1, temp);
+                }
+            }
+
+            return kernelData;
         }
 
         #endregion Public Constructors
@@ -173,7 +236,7 @@ namespace Shojy.FF7.Elena
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private static Dictionary<KernelSection, byte[]> Decompress(string path)
+        private static Dictionary<KernelSection, byte[]> DecompressKernel(string path)
         {
             var kernelFile = new FileInfo(path);
 
