@@ -42,7 +42,7 @@ namespace Shojy.FF7.Elena
 
             this.BaseStream.Position = data.Location;
 
-            using (var reader = new BinaryReader(this.BaseStream, Encoding.ASCII, false))
+            using (var reader = new BinaryReader(this.BaseStream, Encoding.ASCII, true))
             {
                 var headerName = reader.ReadBytes(20);
                 var length = reader.ReadInt32();
@@ -51,6 +51,7 @@ namespace Shojy.FF7.Elena
                 this.BaseStream.CopyTo(ms, length);
                 this.BaseStream.Position = 0;
 
+                ms.Position = 0;
                 return ms;
             }
         }

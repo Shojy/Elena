@@ -263,7 +263,6 @@ namespace Shojy.FF7.Elena
                         sectionCompressedLength);
 
                     var decompressedSection = DecompressSection(compressedSection);
-                    Console.WriteLine($"Section #{sectionIndex}: ComLen: {sectionCompressedLength} DecLen: {sectionDecompressedLength} Actual: {decompressedSection.Length}");
                     sections.Add((KernelSection)sectionIndex + 1, decompressedSection);
 
                     offset += 6 + sectionCompressedLength;
