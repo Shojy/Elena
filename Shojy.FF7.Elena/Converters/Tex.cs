@@ -156,7 +156,7 @@ namespace Shojy.FF7.Elena.Converters
         public Bitmap ToBitmap(int preferPalette = 0)
         {
             // Default to the first palette if the preferred is out of range.
-            if (preferPalette > this.NumberOfPalettes || preferPalette < 0)
+            if (preferPalette >= this.NumberOfPalettes || preferPalette < 0)
             {
                 preferPalette = 0;
             }
