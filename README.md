@@ -18,7 +18,7 @@ Weapon[] weapons = reader.WeaponData.Weapons;
 
 ### Reading kernel2.bin
 ```cs
-KernelReader reader = new KernelReader("KERNEL.BIN", KernelType.KernelBin);
+KernelReader reader = new KernelReader("kernel2.bin", KernelType.Kernel2Bin);
 
 // Example of getting text used within battles
 string[] texts = reader.BattleText.Strings;
