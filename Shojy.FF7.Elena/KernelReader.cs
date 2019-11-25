@@ -16,8 +16,7 @@ namespace Shojy.FF7.Elena
     {
         #region Private Fields
 
-        private readonly Dictionary<KernelSection, byte[]> _kernelData;
-        private KernelType _kernelFile;
+        protected Dictionary<KernelSection, byte[]> KernelData { get; set; }
 
         #endregion Private Fields
 
@@ -33,11 +32,11 @@ namespace Shojy.FF7.Elena
             if (kernelFile == KernelType.KernelBin)
             {
                 // Load file and decompress
-                this._kernelData = DecompressKernel(kernel);
+                this.KernelData = DecompressKernel(kernel);
             }
             else if (kernelFile == KernelType.Kernel2Bin)
             {
-                this._kernelData = DecompressKernel2(kernel);
+                this.KernelData = DecompressKernel2(kernel);
             } else {
                 throw new NotSupportedException("This type of kernel is not yet supported.");
             }
@@ -52,13 +51,13 @@ namespace Shojy.FF7.Elena
 
             foreach(var pair in data)
             {
-                if (this._kernelData.ContainsKey(pair.Key))
+                if (this.KernelData.ContainsKey(pair.Key))
                 {
-                    this._kernelData[pair.Key] = pair.Value;
+                    this.KernelData[pair.Key] = pair.Value;
                 }
                 else
                 {
-                    this._kernelData.Add(pair.Key, pair.Value);
+                    this.KernelData.Add(pair.Key, pair.Value);
                 }
             }
 
@@ -66,6 +65,8 @@ namespace Shojy.FF7.Elena
             this.LoadSections();
             return this;
         }
+
+        protected KernelReader() { }
 
         private static Dictionary<KernelSection, byte[]> DecompressKernel2(string path)
         {
@@ -263,6 +264,8 @@ namespace Shojy.FF7.Elena
                         sectionCompressedLength);
 
                     var decompressedSection = DecompressSection(compressedSection);
+
+                    Console.WriteLine($"{(KernelSection)sectionIndex + 1} C:{compressedSection.Length} D:{decompressedSection.Length}");
                     sections.Add((KernelSection)sectionIndex + 1, decompressedSection);
 
                     offset += 6 + sectionCompressedLength;
@@ -292,47 +295,47 @@ namespace Shojy.FF7.Elena
         /// </summary>
         private void LoadSections()
         {
-            this.CommandDescriptions = new TextSection(this._kernelData[KernelSection.CommandDescriptions]);
-            this.MagicDescriptions = new TextSection(this._kernelData[KernelSection.MagicDescriptions]);
-            this.ItemDescriptions = new TextSection(this._kernelData[KernelSection.ItemDescriptions]);
-            this.WeaponDescriptions = new TextSection(this._kernelData[KernelSection.WeaponDescriptions]);
-            this.ArmorDescriptions = new TextSection(this._kernelData[KernelSection.ArmorDescriptions]);
-            this.AccessoryDescriptions = new TextSection(this._kernelData[KernelSection.AccessoryDescriptions]);
-            this.MateriaDescriptions = new TextSection(this._kernelData[KernelSection.MateriaDescriptions]);
-            this.KeyItemDescriptions = new TextSection(this._kernelData[KernelSection.KeyItemDescriptions]);
-            this.CommandNames = new TextSection(this._kernelData[KernelSection.CommandNames]);
-            this.MagicNames = new TextSection(this._kernelData[KernelSection.MagicNames]);
-            this.ItemNames = new TextSection(this._kernelData[KernelSection.ItemNames]);
-            this.WeaponNames = new TextSection(this._kernelData[KernelSection.WeaponNames]);
-            this.ArmorNames = new TextSection(this._kernelData[KernelSection.ArmorNames]);
-            this.AccessoryNames = new TextSection(this._kernelData[KernelSection.AccessoryNames]);
-            this.MateriaNames = new TextSection(this._kernelData[KernelSection.MateriaNames]);
-            this.KeyItemNames = new TextSection(this._kernelData[KernelSection.KeyItemNames]);
-            this.BattleText = new TextSection(this._kernelData[KernelSection.BattleText]);
-            this.SummonAttackNames = new TextSection(this._kernelData[KernelSection.SummonAttackNames]);
+            this.CommandDescriptions = new TextSection(this.KernelData[KernelSection.CommandDescriptions]);
+            this.MagicDescriptions = new TextSection(this.KernelData[KernelSection.MagicDescriptions]);
+            this.ItemDescriptions = new TextSection(this.KernelData[KernelSection.ItemDescriptions]);
+            this.WeaponDescriptions = new TextSection(this.KernelData[KernelSection.WeaponDescriptions]);
+            this.ArmorDescriptions = new TextSection(this.KernelData[KernelSection.ArmorDescriptions]);
+            this.AccessoryDescriptions = new TextSection(this.KernelData[KernelSection.AccessoryDescriptions]);
+            this.MateriaDescriptions = new TextSection(this.KernelData[KernelSection.MateriaDescriptions]);
+            this.KeyItemDescriptions = new TextSection(this.KernelData[KernelSection.KeyItemDescriptions]);
+            this.CommandNames = new TextSection(this.KernelData[KernelSection.CommandNames]);
+            this.MagicNames = new TextSection(this.KernelData[KernelSection.MagicNames]);
+            this.ItemNames = new TextSection(this.KernelData[KernelSection.ItemNames]);
+            this.WeaponNames = new TextSection(this.KernelData[KernelSection.WeaponNames]);
+            this.ArmorNames = new TextSection(this.KernelData[KernelSection.ArmorNames]);
+            this.AccessoryNames = new TextSection(this.KernelData[KernelSection.AccessoryNames]);
+            this.MateriaNames = new TextSection(this.KernelData[KernelSection.MateriaNames]);
+            this.KeyItemNames = new TextSection(this.KernelData[KernelSection.KeyItemNames]);
+            this.BattleText = new TextSection(this.KernelData[KernelSection.BattleText]);
+            this.SummonAttackNames = new TextSection(this.KernelData[KernelSection.SummonAttackNames]);
 
             this.WeaponData = new WeaponData(
-                this._kernelData[KernelSection.WeaponData],
+                this.KernelData[KernelSection.WeaponData],
                 this.WeaponNames.Strings,
                 this.WeaponDescriptions.Strings);
 
             this.ItemData = new ItemData(
-                this._kernelData[KernelSection.ItemData],
+                this.KernelData[KernelSection.ItemData],
                 this.ItemNames.Strings,
                 this.ItemDescriptions.Strings);
 
             this.ArmorData = new ArmorData(
-                this._kernelData[KernelSection.ArmorData],
+                this.KernelData[KernelSection.ArmorData],
                 this.ArmorNames.Strings,
                 this.ArmorDescriptions.Strings);
 
             this.AccessoryData = new AccessoryData(
-                this._kernelData[KernelSection.AccessoryData],
+                this.KernelData[KernelSection.AccessoryData],
                 this.AccessoryNames.Strings,
                 this.AccessoryDescriptions.Strings);
 
             this.MateriaData = new MateriaData(
-                this._kernelData[KernelSection.MateriaData],
+                this.KernelData[KernelSection.MateriaData],
                 this.MateriaNames.Strings,
                 this.MateriaDescriptions.Strings);
 
