@@ -16,7 +16,7 @@ namespace Shojy.FF7.Elena
     {
         #region Private Fields
 
-        private readonly Dictionary<KernelSection, byte[]> _kernelData;
+        public readonly Dictionary<KernelSection, byte[]> _kernelData;
         private KernelType _kernelFile;
 
         #endregion Private Fields
@@ -65,6 +65,13 @@ namespace Shojy.FF7.Elena
             // Reload the data
             this.LoadSections();
             return this;
+        }
+
+        public KernelReader(byte[] data)
+        {
+            this._kernelData = ExtractSectionsFromByteData(data);
+
+            this.LoadSections();
         }
 
         private static Dictionary<KernelSection, byte[]> DecompressKernel2(string path)
@@ -245,30 +252,36 @@ namespace Shojy.FF7.Elena
             {
                 fileStream.CopyTo(memoryStream);
                 var bytes = memoryStream.ToArray();
-                var sections = new Dictionary<KernelSection, byte[]>();
-                var offset = 0;
-
-                for (var sectionIndex = 0; sectionIndex < 27; ++sectionIndex)
-                {
-                    var sectionCompressedLength = BitConverter.ToUInt16(bytes, offset + 0);
-                    var sectionDecompressedLength = BitConverter.ToUInt16(bytes, offset + 2);
-                    var fileType = BitConverter.ToUInt16(bytes, offset + 4);
-
-                    var compressedSection = new byte[sectionCompressedLength];
-                    Array.Copy(
-                        bytes,
-                        offset + 6,
-                        compressedSection,
-                        0,
-                        sectionCompressedLength);
-
-                    var decompressedSection = DecompressSection(compressedSection);
-                    sections.Add((KernelSection)sectionIndex + 1, decompressedSection);
-
-                    offset += 6 + sectionCompressedLength;
-                }
-                return sections;
+                return ExtractSectionsFromByteData(bytes);
             }
+        }
+
+        private static Dictionary<KernelSection, byte[]> ExtractSectionsFromByteData(byte[] bytes)
+        {
+            var sections = new Dictionary<KernelSection, byte[]>();
+            var offset = 0;
+
+            for (var sectionIndex = 0; sectionIndex < 27; ++sectionIndex)
+            {
+                var sectionCompressedLength = BitConverter.ToUInt16(bytes, offset + 0);
+                var sectionDecompressedLength = BitConverter.ToUInt16(bytes, offset + 2);
+                var fileType = BitConverter.ToUInt16(bytes, offset + 4);
+
+                var compressedSection = new byte[sectionCompressedLength];
+                Array.Copy(
+                    bytes,
+                    offset + 6,
+                    compressedSection,
+                    0,
+                    sectionCompressedLength);
+
+                var decompressedSection = DecompressSection(compressedSection);
+                sections.Add((KernelSection) sectionIndex + 1, decompressedSection);
+
+                offset += 6 + sectionCompressedLength;
+            }
+
+            return sections;
         }
 
         /// <summary>
