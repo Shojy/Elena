@@ -14,16 +14,9 @@ using SeventhHeaven.Classes;
 namespace Shojy.FF7.Elena.Mod.Helpers
 {
     public static class ModExtensions
-    {
-        private static RuntimeProfile _cacheProfile = null;
-
+    { 
         public static RuntimeProfile GetRuntimeProfile(this _7HPlugin plugin)
         {
-            if (_cacheProfile != null)
-            {
-                return _cacheProfile;
-            }
-
             MethodInfo dynMethod = typeof(GameLauncher).GetMethod("CreateRuntimeProfile",
                 BindingFlags.NonPublic | BindingFlags.Static);
 
@@ -38,8 +31,6 @@ namespace Shojy.FF7.Elena.Mod.Helpers
             {
                 mod.Startup();
             }
-
-            _cacheProfile = profile;
 
             return profile;
         }

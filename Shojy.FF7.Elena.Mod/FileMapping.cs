@@ -11,7 +11,7 @@ namespace Shojy.FF7.Elena.Mod
 
     public class ImageFile : BaseFile
     {
-        public long ColorPalette { get; set; }
+        public int ColorPalette { get; set; }
 
         public double LocationXRatio { get; set; }
 

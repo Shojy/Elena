@@ -16,26 +16,8 @@ namespace _7thHeaven
 {
     public class Plugin : _7HPlugin
     {
-       
-
-        private RuntimeMod ThisMod;
         public override void Start(RuntimeMod thisMod)
         {
-            this.ThisMod = thisMod;
-            GameLauncher.Instance.LaunchCompleted += this.Instance_LaunchCompleted;
-        }
-
-        private void Instance_LaunchCompleted(bool wasSuccessful)
-        {
-            if (wasSuccessful)
-            {
-                this.GameLaunched(this.ThisMod);
-            }
-        }
-
-        public void GameLaunched(RuntimeMod thisMod)
-        {
-
             var profile = this.GetRuntimeProfile();
 
             var basePath = Path.Combine(profile.FF7Path, "mods", "Interactive7");
@@ -115,16 +97,17 @@ namespace _7thHeaven
 
             this.ExtractKernels(map, basePath, profile);
 
-
+            
             this.ExtractImages(map, basePath, profile);
 
-            using var jsonWriter = new StreamWriter(@"C:\Games\profile.json");
-            jsonWriter.Write(JsonConvert.SerializeObject(this.GetRuntimeProfile(), new JsonSerializerSettings()
+            if (this.interactive7 is null)
             {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            }));
-
-            this.interactive7 = Process.Start(Path.Combine(basePath, "InteractiveSeven.exe"));
+                var proc = new ProcessStartInfo(Path.Combine(basePath, "InteractiveSeven.exe"), "--7h")
+                {
+                    WorkingDirectory = basePath
+                };
+                this.interactive7 = Process.Start(proc);
+            }
 
         }
 
@@ -223,16 +206,53 @@ namespace _7thHeaven
                                     {
                                         using var ms = new MemoryStream();
                                         arc.GetData(ov.File).CopyTo(ms);
-                                        if (ov.File.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase))
+                                        var exts = new[] {".png", ".bmp", ".jpg", ".jpeg", ".gif"};
+                                        if (exts.Any(e => ov.File.EndsWith(e, StringComparison.InvariantCultureIgnoreCase)))
                                         {
-                                            this.ProcessPng(ms, img, basePath);
+                                            ProcessPng(ms, img, basePath);
                                         }
                                         else if (ov.File.EndsWith(".tex", StringComparison.InvariantCultureIgnoreCase))
                                         {
-                                            // ProcessTex()
+                                            ProcessTex(ms, img, basePath);
                                         }
                                         didFind = true;
                                         break;
+                                    }
+                                }
+                            }
+
+                            var lgpParts = lgpSet.Key.Split('\\', '/');
+                            for (var i = lgpParts.Length - 1; i >= 0; --i)
+                            {
+                                var path = "";
+                                for (var j = i; j < lgpParts.Length; ++j)
+                                {
+                                    path += lgpParts[j] + "\\";
+                                }
+
+                                path = path.TrimEnd('\\');
+                                var ov = mod.GetOverrides(path).FirstOrDefault();
+                                
+                                if (ov != null)
+                                {
+                                    try
+                                    {
+                                        var arc = mod.GetArchive();
+                                        using var lgp = arc.GetData(path);
+
+                                        var reader = new LgpReader(lgp);
+
+                                        if (reader.ListFiles().Contains(tex.Key))
+                                        {
+                                            using var texStream = reader.ExtractFile(tex.Key);
+                                            ProcessTex(texStream, img, basePath);
+                                            didFind = true;
+                                            break;
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        // Skip any invalid or corrupt files.
                                     }
                                 }
                             }
@@ -245,7 +265,20 @@ namespace _7thHeaven
                             var loc = Path.Combine(profile.FF7Path, "data", lgpSet.Key);
                             if (File.Exists(loc))
                             {
-                                continue;
+                                var reader = new LgpReader(loc);
+
+                                try
+                                {
+                                    if (reader.ListFiles().Contains(tex.Key))
+                                    {
+                                        using var texStream = reader.ExtractFile(tex.Key);
+                                        ProcessTex(texStream, img, basePath);
+                                    }
+                                }
+                                catch
+                                {
+                                    // Skip corrupted or invalid files
+                                }
                             }
                         }
                     }
@@ -253,17 +286,28 @@ namespace _7thHeaven
             }
         }
 
-        private void ProcessPng(Stream img, ImageFile export, string basePath)
+        private static void ProcessTex(Stream img, ImageFile export, string basePath)
+        {
+            var bmp = new Tex(img).ToBitmap(export.ColorPalette);
+            ProcessBitmap(bmp, export, basePath);
+        }
+
+        private static void ProcessPng(Stream img, ImageFile export, string basePath)
         {
             var bmp = Image.FromStream(img);
-            
-            var crop = new Rectangle(
-                (int)(bmp.Width * export.LocationXRatio),
-                (int)(bmp.Height * export.LocationYRatio),
-                (int)(bmp.Width * export.CropXRatio),
-                (int)(bmp.Height * export.CropYRatio));
 
-            var croppedBmp = new Bitmap((int)(bmp.Width * export.CropXRatio), (int)(bmp.Height * export.CropYRatio));
+            ProcessBitmap(bmp, export, basePath);
+        }
+
+        private static void ProcessBitmap(Image bmp, ImageFile export, string basePath)
+        {
+            var crop = new Rectangle(
+                (int) (bmp.Width * export.LocationXRatio),
+                (int) (bmp.Height * export.LocationYRatio),
+                (int) (bmp.Width * export.CropXRatio),
+                (int) (bmp.Height * export.CropYRatio));
+
+            var croppedBmp = new Bitmap((int) (bmp.Width * export.CropXRatio), (int) (bmp.Height * export.CropYRatio));
 
             using (var g = Graphics.FromImage(croppedBmp))
             {
@@ -280,7 +324,8 @@ namespace _7thHeaven
 
         public override void Stop()
         {
-            this.interactive7.Close();
+            this.interactive7.Kill();
+            this.interactive7 = null;
         }
     }
 }
