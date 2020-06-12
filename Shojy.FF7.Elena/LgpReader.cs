@@ -42,7 +42,7 @@ namespace Shojy.FF7.Elena
 
             this.BaseStream.Position = data.Location;
 
-            using (var reader = new BinaryReader(this.BaseStream, Encoding.ASCII, true))
+            using (var reader = new BinaryReader(this.BaseStream, Encoding.UTF8, true))
             {
                 var headerName = reader.ReadBytes(20);
                 var length = reader.ReadInt32();
@@ -60,7 +60,7 @@ namespace Shojy.FF7.Elena
         {
             var files = new List<ArchiveFile>();
 
-            using (var reader = new BinaryReader(this.BaseStream, Encoding.ASCII, true))
+            using (var reader = new BinaryReader(this.BaseStream, Encoding.UTF8, true))
             {
                 var fileHeader = reader.ReadBytes(12);
                 var numberOfFiles = reader.ReadUInt32();
