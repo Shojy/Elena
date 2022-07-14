@@ -54,7 +54,7 @@ namespace Shojy.FF7.Elena.Runner
 
             var lgp = new LgpReader(Path.Combine(minigame, "chocobo.lgp"));
 
-            Console.WriteLine($"Extracting .tex files as png from {lgp}");
+            Console.WriteLine($"Extracting .tex files as png from chocobo.lgp. Putting in img/");
             Directory.CreateDirectory("img");
             foreach (var listFile in lgp.ListFiles())
             {
