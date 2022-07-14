@@ -69,18 +69,16 @@ namespace Shojy.FF7.Elena.Runner
                     // Save or convert file
                     try
                     {
-                        var crop = new Rectangle(0, 0, 84, 96);
                         var bmp = TexConverter.ToBitmap(dataStream);
-                        var croppedBmp = new Bitmap(84, 96);
 
-                        using (var g = Graphics.FromImage(croppedBmp))
+                        using (var g = Graphics.FromImage(bmp))
                         {
-                            g.DrawImage(bmp, new Rectangle(0, 0, croppedBmp.Width, croppedBmp.Height),
-                                crop,
+                            g.DrawImage(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height),
+                                new Rectangle(0, 0, bmp.Width, bmp.Height),
                                 GraphicsUnit.Pixel);
                         }
 
-                        croppedBmp.Save(fileWriter.BaseStream, ImageFormat.Png);
+                        bmp.Save(fileWriter.BaseStream, ImageFormat.Png);
                     }
                     catch (Exception ex)
                     {
