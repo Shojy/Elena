@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-using Shojy.FF7.Elena.Battle;
+﻿using Shojy.FF7.Elena.Battle;
 using Shojy.FF7.Elena.Items;
 
 namespace Shojy.FF7.Elena.Equipment
