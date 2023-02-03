@@ -80,7 +80,7 @@ namespace Shojy.FF7.Elena.Sections
                 ElementalDamageModifier = (DamageModifier) data[0x4],
                 SpecialEffect = (AccessoryEffect) data[0x5],
                 ElementalDefense = (Elements) BitConverter.ToUInt16(data, 0x6),
-                StatusDefense = (EquipmentStatus) BitConverter.ToUInt32(data, 0x8),
+                StatusDefense = (Statuses) BitConverter.ToUInt32(data, 0x8),
                 EquipableBy = (EquipableBy) BitConverter.ToUInt16(data, 0xC),
                 Restrictions = (Restrictions) ~BitConverter.ToUInt16(data, 0xE)
             };

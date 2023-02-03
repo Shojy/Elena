@@ -16,7 +16,7 @@ namespace Shojy.FF7.Elena.Equipment
         public DamageModifier ElementalDamageModifier { get; set; }
         public AccessoryEffect SpecialEffect { get; set; }
         public Elements ElementalDefense { get; set; }
-        public EquipmentStatus StatusDefense { get; set; }
+        public Statuses StatusDefense { get; set; }
         public EquipableBy EquipableBy { get; set; }
         public Restrictions Restrictions { get; set; }
     }

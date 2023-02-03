@@ -65,6 +65,14 @@ namespace Shojy.FF7.Elena.Sections
             wpn.WeaponModelId = wpnData[0x9];
             wpn.EquipableBy = (EquipableBy)BitConverter.ToUInt16(wpnData, 0xE);
             wpn.AttackElements = (Elements)BitConverter.ToUInt16(wpnData, 0x10);
+            wpn.BoostedStat1 = (CharacterStat)wpnData[0x14];
+            wpn.BoostedStat2 = (CharacterStat)wpnData[0x15];
+            wpn.BoostedStat3 = (CharacterStat)wpnData[0x16];
+            wpn.BoostedStat4 = (CharacterStat)wpnData[0x17];
+            wpn.BoostedStat1Bonus = wpnData[0x18];
+            wpn.BoostedStat2Bonus = wpnData[0x19];
+            wpn.BoostedStat3Bonus = wpnData[0x1A];
+            wpn.BoostedStat4Bonus = wpnData[0x1B];
 
             for (var slot = 0; slot < 8; ++slot)
             {
