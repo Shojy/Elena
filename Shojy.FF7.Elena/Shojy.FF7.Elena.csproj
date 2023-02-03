@@ -10,7 +10,7 @@
     <PackageProjectUrl>https://github.com/Shojy/Elena</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Shojy/Elena</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <Version>0.3.0-pre</Version>
+    <Version>0.4.0-pre</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageTags>FF7, Kernel.bin, kernel2.bin, Final Fantasy</PackageTags>
     <Authors>Joshua Moon (Shojy)</Authors>
