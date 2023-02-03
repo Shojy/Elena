@@ -19,6 +19,14 @@ namespace Shojy.FF7.Elena.Equipment
         public byte AccuracyRate { get; set; }
         public Elements AttackElements { get; set; }
         public byte AttackStrength { get; set; }
+        public CharacterStat BoostedStat1 { get; set; }
+        public byte BoostedStat1Bonus { get; set; }
+        public CharacterStat BoostedStat2 { get; set; }
+        public byte BoostedStat2Bonus { get; set; }
+        public CharacterStat BoostedStat3 { get; set; }
+        public byte BoostedStat3Bonus { get; set; }
+        public CharacterStat BoostedStat4 { get; set; }
+        public byte BoostedStat4Bonus { get; set; }
         public byte CriticalRate { get; set; }
         public byte DamageCalculationId { get; set; }
         public string Description { get; set; }
