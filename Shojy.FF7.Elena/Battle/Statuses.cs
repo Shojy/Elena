@@ -73,6 +73,6 @@ namespace Shojy.FF7.Elena.Battle
         Resist = 0x1D,
         LuckyGirl = 0x1E,
         Imprisoned = 0x1F,
-        None = 0x00
+        None = 0xFF
     }
 }
