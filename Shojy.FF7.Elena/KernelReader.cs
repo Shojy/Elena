@@ -139,9 +139,19 @@ namespace Shojy.FF7.Elena
         public TextSection ArmorNames { get; protected set; }
 
         /// <summary>
+        /// Kernel section 2
+        /// </summary>
+        public AttackData AttackData { get; protected set; }
+
+        /// <summary>
         /// Kernel section 26
         /// </summary>
         public TextSection BattleText { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 1
+        /// </summary>
+        public CommandData CommandData { get; protected set; }
 
         /// <summary>
         /// Kernel section 10
@@ -312,6 +322,16 @@ namespace Shojy.FF7.Elena
             this.KeyItemNames = new TextSection(this.KernelData[KernelSection.KeyItemNames]);
             this.BattleText = new TextSection(this.KernelData[KernelSection.BattleText]);
             this.SummonAttackNames = new TextSection(this.KernelData[KernelSection.SummonAttackNames]);
+
+            this.CommandData = new CommandData(
+                this.KernelData[KernelSection.CommandData],
+                this.CommandNames.Strings,
+                this.CommandDescriptions.Strings);
+
+            this.AttackData = new AttackData(
+                this.KernelData[KernelSection.AttackData],
+                this.MagicNames.Strings,
+                this.MagicDescriptions.Strings);
 
             this.WeaponData = new WeaponData(
                 this.KernelData[KernelSection.WeaponData],

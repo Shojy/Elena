@@ -27,14 +27,19 @@ namespace Shojy.FF7.Elena.Equipment
         public byte BoostedStat3Bonus { get; set; }
         public CharacterStat BoostedStat4 { get; set; }
         public byte BoostedStat4Bonus { get; set; }
+        public byte CriticalHitSoundID { get; set; }
         public byte CriticalRate { get; set; }
         public byte DamageCalculationId { get; set; }
         public string Description { get; set; }
         public EquipableBy EquipableBy { get; set; }
         public GrowthRate GrowthRate { get; set; }
+        public byte HighSoundIDMask { get; set; }
+        public byte ImpactEffectID { get; set; }
         public int Index { get; set; }
         public MateriaSlot[] MateriaSlots { get; set; }
+        public byte MissedAttackSoundID { get; set; }
         public string Name { get; set; }
+        public byte NormalHitSoundID { get; set; }
         public Restrictions Restrictions { get; set; }
         public EquipmentStatus Status { get; set; }
         public TargetData Targets { get; set; }
