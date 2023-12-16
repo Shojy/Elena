@@ -63,6 +63,7 @@ namespace Shojy.FF7.Elena.Sections
             wpn.CriticalRate = wpnData[0x7];
             wpn.AccuracyRate = wpnData[0x8];
             wpn.WeaponModelId = wpnData[0x9];
+            wpn.HighSoundIDMask = wpnData[0xB];
             wpn.EquipableBy = (EquipableBy)BitConverter.ToUInt16(wpnData, 0xE);
             wpn.AttackElements = (Elements)BitConverter.ToUInt16(wpnData, 0x10);
             wpn.BoostedStat1 = (CharacterStat)wpnData[0x14];
@@ -78,6 +79,11 @@ namespace Shojy.FF7.Elena.Sections
             {
                 wpn.MateriaSlots[slot] = (MateriaSlot)wpnData[0x1C + slot];
             }
+
+            wpn.NormalHitSoundID = wpnData[0x24];
+            wpn.CriticalHitSoundID = wpnData[0x25];
+            wpn.MissedAttackSoundID = wpnData[0x26];
+            wpn.ImpactEffectID = wpnData[0x27];
 
             wpn.Restrictions = (Restrictions) ~BitConverter.ToUInt16(wpnData, 0x2A);
             return wpn;

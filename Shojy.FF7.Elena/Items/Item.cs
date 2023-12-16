@@ -14,6 +14,10 @@ namespace Shojy.FF7.Elena.Items
         public byte AttackEffectId { get; set; }
         public byte DamageCalculationId { get; set; }
         public byte AttackPower { get; set; }
+        public ConditionSubmenu ConditionSubmenu { get; set; }
+        public StatusChange StatusChange { get; set; }
+        public byte AdditionalEffects { get; set; }
+        public byte AdditionalEffectsModifier { get; set; }
         public Statuses Status { get; set; }
         public Elements Element { get; set; }
         public SpecialEffects Special { get; set; }

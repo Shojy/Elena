@@ -60,6 +60,10 @@ namespace Shojy.FF7.Elena.Sections
             materia.Level3AP = BitConverter.ToUInt16(data, 0x2) * 100;
             materia.Level4AP = BitConverter.ToUInt16(data, 0x4) * 100;
             materia.Level5AP = BitConverter.ToUInt16(data, 0x6) * 100;
+            materia.EquipEffect = data[0x8];
+            var temp = new byte[4];
+            Array.Copy(data, 0x9, temp, 0, 3);
+            materia.Status = (Statuses)BitConverter.ToUInt32(temp);
 
             materia.Element = (MateriaElements)data[0xC];
             materia.MateriaType = Materia.GetMateriaType(data[0xD]);
