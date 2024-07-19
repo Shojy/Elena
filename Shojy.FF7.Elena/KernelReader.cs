@@ -144,6 +144,11 @@ namespace Shojy.FF7.Elena
         public AttackData AttackData { get; protected set; }
 
         /// <summary>
+        /// Kernel section 3
+        /// </summary>
+        public BattleAndGrowthData BattleAndGrowthData { get; protected set; }
+
+        /// <summary>
         /// Kernel section 26
         /// </summary>
         public TextSection BattleText { get; protected set; }
@@ -162,6 +167,16 @@ namespace Shojy.FF7.Elena
         /// Kernel section 18
         /// </summary>
         public TextSection CommandNames { get; protected set; }
+
+        /// <summary>
+        /// Partially merged kernel sections 3 and 4
+        /// </summary>
+        public CharacterData CharacterData { get; protected set; }
+
+        /// <summary>
+        /// Kernel section 4
+        /// </summary>
+        public InitialData InitialData { get; protected set; }
 
         /// <summary>
         /// Kernel section 5, merged with names (Section 20) and descriptions (section 12)
@@ -327,6 +342,16 @@ namespace Shojy.FF7.Elena
                 this.KernelData[KernelSection.CommandData],
                 this.CommandNames.Strings,
                 this.CommandDescriptions.Strings);
+
+            this.BattleAndGrowthData = new BattleAndGrowthData(
+                this.KernelData[KernelSection.BattleAndGrowthData]);
+
+            this.InitialData = new InitialData(
+                this.KernelData[KernelSection.InitData]);
+
+            this.CharacterData = new CharacterData(
+                this.KernelData[KernelSection.InitData],
+                this.KernelData[KernelSection.BattleAndGrowthData]);
 
             this.AttackData = new AttackData(
                 this.KernelData[KernelSection.AttackData],

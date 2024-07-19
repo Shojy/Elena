@@ -47,6 +47,7 @@ namespace Shojy.FF7.Elena.Sections
         #region Public Properties
 
         public Materia[] Materias { get; }
+        public const int AttributeCount = 6;
 
         #endregion Public Properties
 
@@ -61,12 +62,18 @@ namespace Shojy.FF7.Elena.Sections
             materia.Level4AP = BitConverter.ToUInt16(data, 0x4) * 100;
             materia.Level5AP = BitConverter.ToUInt16(data, 0x6) * 100;
             materia.EquipEffect = data[0x8];
+
             var temp = new byte[4];
             Array.Copy(data, 0x9, temp, 0, 3);
             materia.Status = (Statuses)BitConverter.ToUInt32(temp);
 
             materia.Element = (MateriaElements)data[0xC];
-            materia.MateriaType = Materia.GetMateriaType(data[0xD]);
+            materia.MateriaTypeByte = data[0xD];
+
+            for (int i = 0; i < AttributeCount; ++i)
+            {
+                materia.Attributes[i] = data[0xE + i];
+            }
             return materia;
         }
 
