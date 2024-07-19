@@ -1,4 +1,5 @@
 ﻿using Shojy.FF7.Elena.Battle;
+using Shojy.FF7.Elena.Sections;
 
 namespace Shojy.FF7.Elena.Materias
 {
@@ -13,8 +14,9 @@ namespace Shojy.FF7.Elena.Materias
         public int Level5AP { get; set; }
         public Statuses Status { get; set; }
         public MateriaElements Element { get; set; }
-        public MateriaType MateriaType { get; set; }
+        public byte MateriaTypeByte { get; set; }
         public byte EquipEffect { get; set; }
+        public byte[] Attributes { get; } = new byte[MateriaData.AttributeCount];
 
         public static MateriaType GetMateriaType(byte data)
         {
