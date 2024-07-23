@@ -26,6 +26,7 @@ namespace Shojy.FF7.Elena.Sections
 
             for (int i = 0; i < 9; i++)
             {
+                characterList[i] = new Character();
                 Array.Copy(
                     initialData,
                     CharacterRecordLength * i,
@@ -101,7 +102,7 @@ namespace Shojy.FF7.Elena.Sections
             c.AccessoryID = data[0x1E];
             c.CharacterFlags = (CharacterFlags)data[0x1F];
             c.IsBackRow = data[0x20] == 0xFE;
-            c.LevelProgressBar = data[0x21]; ;
+            c.LevelProgressBar = data[0x21];
             c.LearnedLimits = (LearnedLimits)BitConverter.ToUInt16(data, 0x22);
             c.KillCount = BitConverter.ToUInt16(data, 0x24);
             c.Limit1Uses = BitConverter.ToUInt16(data, 0x26);
@@ -125,7 +126,7 @@ namespace Shojy.FF7.Elena.Sections
             for (int i = 0; i < 8; ++i)
             {
                 c.ArmorMateria[i] = new InventoryMateria();
-                Array.Copy(data, 0x80 + (i * 4), temp, 0, 4);
+                Array.Copy(data, 0x60 + (i * 4), temp, 0, 4);
                 c.ArmorMateria[i].ParseData(temp);
             }
             c.EXPtoNextLevel = BitConverter.ToUInt32(data, 0x80);

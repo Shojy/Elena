@@ -58,15 +58,16 @@ namespace Shojy.FF7.Elena.Sections
                 Inventory[i] = new InventoryItem();
                 Inventory[i].ParseData(temp);
             }
+            temp = new byte[4];
             for (int i = 0; i < MateriaInventorySize; ++i)
             {
-                Array.Copy(data, 0x728 + (i * 2), temp, 0, 2);
+                Array.Copy(data, 0x728 + (i * 4), temp, 0, 2);
                 Materia[i] = new InventoryMateria();
                 Materia[i].ParseData(temp);
             }
             for (int i = 0; i < StolenMateriaCount; ++i)
             {
-                Array.Copy(data, 0xA48 + (i * 2), temp, 0, 2);
+                Array.Copy(data, 0xA48 + (i * 4), temp, 0, 2);
                 StolenMateria[i] = new InventoryMateria();
                 StolenMateria[i].ParseData(temp);
             }
