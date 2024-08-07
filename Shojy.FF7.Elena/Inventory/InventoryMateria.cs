@@ -17,7 +17,7 @@ namespace Shojy.FF7.Elena.Inventory
 
             var ap = new byte[4];
             Array.Copy(data, 1, ap, 0, 3);
-            CurrentAP = BitConverter.ToInt32(ap);
+            CurrentAP = BitConverter.ToInt32(ap, 0);
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Shojy.FF7.Elena.Sections
 
             var temp = new byte[4];
             Array.Copy(data, 0x9, temp, 0, 3);
-            materia.Status = (Statuses)BitConverter.ToUInt32(temp);
+            materia.Status = (Statuses)BitConverter.ToUInt32(temp, 0);
 
             materia.Element = (MateriaElements)data[0xC];
             materia.MateriaTypeByte = data[0xD];
