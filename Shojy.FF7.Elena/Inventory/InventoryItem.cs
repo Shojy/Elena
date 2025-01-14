@@ -31,7 +31,7 @@ namespace Shojy.FF7.Elena.Inventory
             var converter = new BitArray(indexBits);
             var indexBytes = new byte[2];
             converter.CopyTo(indexBytes, 0);
-            Item = BitConverter.ToUInt16(indexBytes);
+            Item = BitConverter.ToUInt16(indexBytes, 0);
 
             converter = new BitArray(amountBits);
             var amountBytes = new byte[1];

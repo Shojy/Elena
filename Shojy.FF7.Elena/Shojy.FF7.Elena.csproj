@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0;net8.0;netstandard2.0;netstandard2.1;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>A kernel reading utility for Final Fantasy VII</Description>
     <PackageLicenseExpression></PackageLicenseExpression>
@@ -10,12 +10,13 @@
     <PackageProjectUrl>https://github.com/Shojy/Elena</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Shojy/Elena</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <Version>0.4.0-pre</Version>
+    <Version>0.6.0-pre</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageTags>FF7, Kernel.bin, kernel2.bin, Final Fantasy</PackageTags>
-    <Authors>Joshua Moon (Shojy)</Authors>
+    <Authors>Joshua Moon (Shojy), petfriendamy</Authors>
     <Company />
     <Product>Elena</Product>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,10 +24,14 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.6.24327.6" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
