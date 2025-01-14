@@ -143,7 +143,7 @@ namespace Shojy.FF7.Elena.Sections
             c.HPCurveIndex = data[0x6];
             c.MPCurveIndex = data[0x7];
             c.EXPCurveIndex = data[0x8];
-            c.RecruitLevelOffset = (sbyte)(data[0xA] / 2);
+            c.RecruitLevelOffset = (sbyte)((sbyte)data[0xA] / 2);
             c.Limit1_1Index = data[0xC];
             c.Limit1_2Index = data[0xD];
             c.Limit2_1Index = data[0xF];
