@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shojy.FF7.Elena.Text;
 
 namespace Shojy.FF7.Elena.Battle
 {
@@ -18,9 +14,9 @@ namespace Shojy.FF7.Elena.Battle
 
         public ushort CameraMovementIDSingle { get; set; }
         public ushort CameraMovementIDMulti { get; set; }
-        public string Description { get; set; }
+        public FFText Description { get; set; }
         public int Index { get; set; }
-        public string Name { get; set; }
+        public FFText Name { get; set; }
         public byte InitialCursorAction { get; set; }
         public TargetData TargetFlags { get; set; }
 

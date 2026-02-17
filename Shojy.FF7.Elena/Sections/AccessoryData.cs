@@ -1,8 +1,9 @@
-﻿using Shojy.FF7.Elena.Equipment;
+﻿using Shojy.FF7.Elena.Battle;
+using Shojy.FF7.Elena.Equipment;
+using Shojy.FF7.Elena.Items;
+using Shojy.FF7.Elena.Text;
 using System;
 using System.Collections.Generic;
-using Shojy.FF7.Elena.Battle;
-using Shojy.FF7.Elena.Items;
 
 namespace Shojy.FF7.Elena.Sections
 {
@@ -25,7 +26,7 @@ namespace Shojy.FF7.Elena.Sections
         /// <param name="sectionData"></param>
         /// <param name="names"></param>
         /// <param name="descriptions"></param>
-        public AccessoryData(byte[] sectionData, IReadOnlyList<string> names, IReadOnlyList<string> descriptions)
+        public AccessoryData(byte[] sectionData, IReadOnlyList<FFText> names, IReadOnlyList<FFText> descriptions)
         {
             this._sectionData = sectionData;
 

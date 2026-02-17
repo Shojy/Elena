@@ -1,6 +1,6 @@
 ﻿using Shojy.FF7.Elena.Characters;
-using Shojy.FF7.Elena.Extensions;
 using Shojy.FF7.Elena.Inventory;
+using Shojy.FF7.Elena.Text;
 using System;
 
 namespace Shojy.FF7.Elena.Sections
@@ -95,7 +95,7 @@ namespace Shojy.FF7.Elena.Sections
 
             var temp = new byte[12];
             Array.Copy(data, 0x10, temp, 0, 12);
-            c.Name = temp.ToFFString();
+            c.Name = new FFText(temp);
 
             c.WeaponID = data[0x1C]; 
             c.ArmorID = data[0x1D];

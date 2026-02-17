@@ -1,13 +1,14 @@
 ﻿using Shojy.FF7.Elena.Battle;
 using Shojy.FF7.Elena.Sections;
+using Shojy.FF7.Elena.Text;
 
 namespace Shojy.FF7.Elena.Materias
 {
     public class Materia
     {
         public int Index { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public FFText Name { get; set; }
+        public FFText Description { get; set; }
         public int Level2AP { get; set; }
         public int Level3AP { get; set; }
         public int Level4AP { get; set; }

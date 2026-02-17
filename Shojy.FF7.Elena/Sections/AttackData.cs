@@ -1,5 +1,6 @@
 ﻿using Shojy.FF7.Elena.Attacks;
 using Shojy.FF7.Elena.Battle;
+using Shojy.FF7.Elena.Text;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +17,7 @@ namespace Shojy.FF7.Elena.Sections
 
         #region Public Constructors
 
-        public AttackData(byte[] sectionData, IReadOnlyList<string> names, IReadOnlyList<string> descriptions)
+        public AttackData(byte[] sectionData, IReadOnlyList<FFText> names, IReadOnlyList<FFText> descriptions)
         {
             this._sectionData = sectionData;
 

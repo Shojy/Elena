@@ -1,7 +1,8 @@
 ﻿using Shojy.FF7.Elena.Battle;
+using Shojy.FF7.Elena.Materias;
+using Shojy.FF7.Elena.Text;
 using System;
 using System.Collections.Generic;
-using Shojy.FF7.Elena.Materias;
 
 namespace Shojy.FF7.Elena.Sections
 {
@@ -16,7 +17,7 @@ namespace Shojy.FF7.Elena.Sections
 
         #region Public Constructors
 
-        public MateriaData(byte[] sectionData, IReadOnlyList<string> names, IReadOnlyList<string> descriptions)
+        public MateriaData(byte[] sectionData, IReadOnlyList<FFText> names, IReadOnlyList<FFText> descriptions)
         {
             _sectionData = sectionData;
 

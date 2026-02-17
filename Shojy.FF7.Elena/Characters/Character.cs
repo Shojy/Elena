@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Shojy.FF7.Elena.Inventory;
+﻿using Shojy.FF7.Elena.Inventory;
+using Shojy.FF7.Elena.Text;
 
 namespace Shojy.FF7.Elena.Characters
 {
     public class Character
     {
         //initial data
-        public string Name { get; set; }
+        public FFText Name { get; set; }
         public byte ID { get; set; }
         public byte Level { get; set; }
         public byte Strength { get; set; }
