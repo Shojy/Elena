@@ -1,13 +1,14 @@
 ﻿using Shojy.FF7.Elena.Battle;
 using Shojy.FF7.Elena.Items;
+using Shojy.FF7.Elena.Text;
 
 namespace Shojy.FF7.Elena.Equipment
 {
     public class Accessory
     {
         public int Index { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public FFText Name { get; set; }
+        public FFText Description { get; set; }
 
         public CharacterStat BoostedStat1 { get; set; }
         public CharacterStat BoostedStat2 { get; set; }

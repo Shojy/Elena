@@ -1,4 +1,5 @@
 ﻿using Shojy.FF7.Elena.Items;
+using Shojy.FF7.Elena.Text;
 using System.Collections.Generic;
 
 namespace Shojy.FF7.Elena.Sections
@@ -7,7 +8,7 @@ namespace Shojy.FF7.Elena.Sections
     {
         #region Public Constructors
 
-        public KeyItemData(IReadOnlyList<string> names, IReadOnlyList<string> descriptions)
+        public KeyItemData(IReadOnlyList<FFText> names, IReadOnlyList<FFText> descriptions)
         {
             var items = new List<KeyItem>();
             for (var i = 0; i < names.Count; ++i)

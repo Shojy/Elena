@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Shojy.FF7.Elena.Text;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Shojy.FF7.Elena.Extensions;
 
 namespace Shojy.FF7.Elena.Sections
 {
@@ -13,7 +12,7 @@ namespace Shojy.FF7.Elena.Sections
         private const byte LookupCommand = 0xF9;
         private readonly byte[] _sectionData;
 
-        public string[] Strings { get; }
+        public FFText[] Strings { get; }
 
         #endregion Private Fields
 
@@ -34,9 +33,9 @@ namespace Shojy.FF7.Elena.Sections
             this.Strings = ExtractStrings(sectionData, addresses);
         }
 
-        private static string[] ExtractStrings(byte[] data, List<ushort> addresses)
+        private static FFText[] ExtractStrings(byte[] data, List<ushort> addresses)
         {
-            var strings = new List<string>();
+            var strings = new List<FFText>();
 
             var text = new List<byte>();
 
@@ -84,7 +83,7 @@ namespace Shojy.FF7.Elena.Sections
                 }
 
                 var bytes = text.ToArray();
-                strings.Add(bytes.ToFFString());
+                strings.Add(new FFText(bytes));
                 text.Clear();
             }
 

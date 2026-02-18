@@ -1,9 +1,11 @@
-﻿namespace Shojy.FF7.Elena.Items
+﻿using Shojy.FF7.Elena.Text;
+
+namespace Shojy.FF7.Elena.Items
 {
     public class KeyItem
     {
         public int Index { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public FFText Name { get; set; }
+        public FFText Description { get; set; }
     }
 }
