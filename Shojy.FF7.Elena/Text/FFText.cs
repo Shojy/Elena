@@ -485,5 +485,10 @@ namespace Shojy.FF7.Elena.Text
             var str = ToString();
             return str.CompareTo(other.ToString());
         }
+        
+        public static implicit operator string(FFText text)
+        {
+            return text.ToString();
+        }
     }
 }

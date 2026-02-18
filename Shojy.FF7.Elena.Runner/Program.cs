@@ -42,7 +42,7 @@ namespace Shojy.FF7.Elena.Runner
 
             foreach (var wpn in weapons)
             {
-                Console.WriteLine($"Found a {wpn.Name.ToString()}!");
+                Console.WriteLine($"Found a {wpn.Name}!");
             }
 
             // This must have a call to MergeKernel2Data for now. The full dataset has not yet been found.
