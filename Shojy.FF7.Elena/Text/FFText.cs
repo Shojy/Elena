@@ -25,7 +25,7 @@ namespace Shojy.FF7.Elena.Text
             ' ', 'Ò', 'Ù', 'Û'
         }.AsReadOnly();
 
-        private ReadOnlyCollection<char> TEXT_MAP_JP1 = new List<char>
+        private readonly ReadOnlyCollection<char> TEXT_MAP_JP1 = new List<char>
         {
             'バ', 'ば', 'ビ', 'び', 'ブ', 'ぶ', 'ベ', 'べ', 'ボ', 'ぼ', 'ガ', 'が', 'ギ', 'ぎ',
             'グ', 'ぐ', 'ゲ', 'げ', 'ゴ', 'ご', 'ザ', 'ざ', 'ジ', 'じ', 'ズ', 'ず', 'ゼ', 'ぜ',
@@ -46,7 +46,7 @@ namespace Shojy.FF7.Elena.Text
             '\'', '－', '＝', '⑬'
         }.AsReadOnly();
 
-        private ReadOnlyCollection<char> TEXT_MAP_JP2 = new List<char>
+        private readonly ReadOnlyCollection<char> TEXT_MAP_JP2 = new List<char>
         {
             '必', '殺', '技', '地', '獄', '火', '炎', '裁', '雷', '大', '怒', '斬', '鉄', '剣',
             '槍', '海', '衝', '聖', '審', '判', '転', '生', '改', '暗', '黒', '釜', '天', '崩',
@@ -65,7 +65,7 @@ namespace Shojy.FF7.Elena.Text
             '重', '力', '球', '空', '双', '野', '菜', '実', '兵', '単', '毛', '茶', '色', '髪'
         }.AsReadOnly();
 
-        private ReadOnlyCollection<char> TEXT_MAP_JP3 = new List<char>
+        private readonly ReadOnlyCollection<char> TEXT_MAP_JP3 = new List<char>
         {
             '安', '香', '花', '会', '員', '蜂', '蜜', '館', '下', '着', '入', '先', '不', '子',
             '供', '屋', '商', '品', '景', '交', '換', '階', '模', '型', '部', '離', '場', '所',
@@ -86,7 +86,7 @@ namespace Shojy.FF7.Elena.Text
             '操', '成', '費', '背', '切', '替', '割'
         }.AsReadOnly();
 
-        private ReadOnlyCollection<char> TEXT_MAP_JP4 = new List<char>
+        private readonly ReadOnlyCollection<char> TEXT_MAP_JP4 = new List<char>
         {
             '由', '閉', '記', '憶', '選', '番', '街', '底', '忘', '都', '過', '艇', '路', '運',
             '搬', '船', '墓', '心', '港', '末', '宿', '西', '道', '艦', '家', '乗', '竜', '巻',
@@ -105,7 +105,7 @@ namespace Shojy.FF7.Elena.Text
             '稼', '良', '議', '導', '夢', '追', '説', '声', '任', '柱', '満', '未', '顔', '旅'
         }.AsReadOnly();
 
-        private ReadOnlyCollection<char> TEXT_MAP_JP5 = new List<char>
+        private readonly ReadOnlyCollection<char> TEXT_MAP_JP5 = new List<char>
         {
             '友', '伝', '夜', '探', '対', '調', '民', '読', '占', '頼', '若', '学', '識', '業',
             '歳', '争', '苦', '織', '困', '答', '準', '恐', '認', '客', '務', '居', '他', '再',
@@ -124,7 +124,7 @@ namespace Shojy.FF7.Elena.Text
             '美', '辺', '昇', '悩', '泊', '低', '酒', '影', '競', '二', '矢', '瞬', '希', '志'
         }.AsReadOnly();
 
-        private ReadOnlyCollection<char> TEXT_MAP_JP6 = new List<char>
+        private readonly ReadOnlyCollection<char> TEXT_MAP_JP6 = new List<char>
         {
             '孫', '継', '団', '給', '抗', '違', '提', '断', '島', '栄', '油', '就', '僕', '存',
             '企', '比', '浸', '非', '応', '細', '承', '編', '排', '努', '締', '談', '趣', '埋',
@@ -143,7 +143,7 @@ namespace Shojy.FF7.Elena.Text
             '航', '横', '帳', '丘', '亭', '財', '律', '布', '規', '謀', '積', '刻', '陥', '類'
         }.AsReadOnly();
 
-        private List<TextCommands> commandList = ((TextCommands[])Enum.GetValues(typeof(TextCommands))).ToList();
+        public static readonly ReadOnlyCollection<TextCommands> COMMAND_LIST = ((TextCommands[])Enum.GetValues(typeof(TextCommands))).ToList().AsReadOnly();
         private readonly byte[] data;
 
         public int Length
@@ -214,27 +214,38 @@ namespace Shojy.FF7.Elena.Text
                             string temp = str.Substring(i + 1);
                             bool found = false;
 
-                            for (j = 0; j < nameList.Length; ++j) //check for character names
+                            if (temp.StartsWith("ALERT")) //special command, makes box red
                             {
-                                if (temp.StartsWith(nameList[j].ToUpper()))
+                                text.Add(0xF8);
+                                text.Add(0x02);
+                                i += 6;
+                                found = true;
+                            }
+
+                            if (!found) //alert not found, so check for character names
+                            {
+                                for (j = 0; j < nameList.Length; ++j)
                                 {
-                                    text.Add((byte)TextCommands.Character);
-                                    text.Add(0x00);
-                                    text.Add((byte)j);
-                                    i += nameList[j].Length + 1;
-                                    found = true;
+                                    if (temp.StartsWith(nameList[j].ToUpper()))
+                                    {
+                                        text.Add((byte)TextCommands.Character);
+                                        text.Add(0x00);
+                                        text.Add((byte)j);
+                                        i += nameList[j].Length + 1;
+                                        found = true;
+                                    }
+                                    if (found) { break; }
                                 }
-                                if (found) { break; }
                             }
 
                             if (!found) //no name found, so check for variables
                             {
-                                for (j = 0; j < commandList.Count; ++j)
+                                for (j = 0; j < COMMAND_LIST.Count; ++j)
                                 {
-                                    var name = Enum.GetName(typeof(TextCommands), commandList[j]);
+                                    var name = Enum.GetName(typeof(TextCommands), COMMAND_LIST[j]);
                                     if (name != null && temp.StartsWith(name.ToUpper()))
                                     {
-                                        text.Add((byte)commandList[j]);
+                                        text.Add((byte)COMMAND_LIST[j]);
                                         text.Add(0xFF);
                                         text.Add(0xFF);
                                         i += name.Length + 1;
@@ -359,8 +370,9 @@ namespace Shojy.FF7.Elena.Text
                     }
                     else
                     {
-                        if (data[i] == 0xF8) //function, ignore this
+                        if (data[i] == 0xF8) //alert function
                         {
+                            text.AddRange("{ALERT}");
                             i++;
                         }
                         else if (data[i] == (byte)TextCommands.Character) //character
@@ -371,7 +383,7 @@ namespace Shojy.FF7.Elena.Text
                             else { text.AddRange("{" + name.ToUpper() + "}"); }
                             i += 2;
                         }
-                        else if (commandList.Contains((TextCommands)data[i])) //variables
+                        else if (COMMAND_LIST.Contains((TextCommands)data[i])) //variables
                         {
                             var name = Enum.GetName(typeof(TextCommands), (TextCommands)data[i]);
                             if (name != null)
