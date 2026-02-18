@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Shojy.FF7.Elena.Converters;
+using Shojy.FF7.Elena.Text;
 
 namespace Shojy.FF7.Elena.Runner
 {
@@ -44,6 +45,21 @@ namespace Shojy.FF7.Elena.Runner
             {
                 Console.WriteLine($"Found a {wpn.Name}!");
             }
+
+            // Read battle text
+            Console.WriteLine("Reading battle text...");
+            var btlText = reader.BattleText.Strings;
+
+            foreach (var btl in btlText)
+            {
+                Console.WriteLine(btl);
+                Console.WriteLine($"Bytes: {BitConverter.ToString(btl.GetBytes())}");
+            }
+
+            //  Test the alert command
+            var test = new FFText("{ALERT}This is a test!");
+            Console.WriteLine(test);
+            Console.WriteLine($"Bytes: {BitConverter.ToString(test.GetBytes())}");
 
             // This must have a call to MergeKernel2Data for now. The full dataset has not yet been found.
             // Otherwise this will load the data from active memory instead of the kernel file on disk.

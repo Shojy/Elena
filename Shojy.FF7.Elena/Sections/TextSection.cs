@@ -41,8 +41,9 @@ namespace Shojy.FF7.Elena.Sections
 
             foreach (var address in addresses)
             {
+                bool command = false, endOfLine = false;
 
-                for (var index = address; index < data.Length && data[index] != 0xFF; ++index)
+                for (var index = address; index < data.Length && !endOfLine; ++index)
                 {
                     var character = data[index];
                     // This is an encoding technique designed to make the raw data smaller. It is based
@@ -76,9 +77,18 @@ namespace Shojy.FF7.Elena.Sections
                         // Skip processing the args byte
                         ++index;
                     }
+                    else if (character == 0xFF)
+                    {
+                        // FF values are expected in text commands
+                        if (command)
+                            text.Add(character);
+                        else
+                            endOfLine = true;
+                    }
                     else
                     {
                         text.Add(character);
+                        command = FFText.COMMAND_LIST.Contains((TextCommands)character);
                     }
                 }
 
