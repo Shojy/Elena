@@ -5,12 +5,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>A kernel reading utility for Final Fantasy VII</Description>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Copyright>2019-2022 Joshua Moon</Copyright>
+    <Copyright>2019-2026 Joshua Moon</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Shojy/Elena</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Shojy/Elena</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <Version>0.7.0-pre</Version>
+    <Version>0.8.0-pre</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageTags>FF7, Kernel.bin, kernel2.bin, Final Fantasy</PackageTags>
     <Authors>Joshua Moon (Shojy), petfriendamy</Authors>
