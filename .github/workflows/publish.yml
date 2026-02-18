@@ -1,0 +1,54 @@
+name: Publish NuGet Package
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [master]
+
+jobs:
+  publish:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Determine version
+        id: version
+        shell: bash
+        run: |
+          # Read the version from the csproj
+          raw_version=$(grep -oP '(?<=<Version>)[^<]+' Shojy.FF7.Elena/Shojy.FF7.Elena.csproj)
+          echo "Raw version from csproj: $raw_version"
+
+          # Strip any existing pre-release suffix to get the base version
+          base_version=$(echo "$raw_version" | sed 's/-.*//')
+          echo "Base version: $base_version"
+
+          # Check if the PR has the 'pre-release' label
+          if echo '${{ toJson(github.event.pull_request.labels.*.name) }}' | grep -q 'pre-release'; then
+            version="${base_version}-pre"
+          else
+            version="$base_version"
+          fi
+
+          echo "Resolved version: $version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore /p:Version=${{ steps.version.outputs.version }}
+
+      - name: Pack
+        run: dotnet pack Shojy.FF7.Elena/Shojy.FF7.Elena.csproj --configuration Release --no-build /p:Version=${{ steps.version.outputs.version }} --output ./nupkg
+
+      - name: Publish to NuGet
+        run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
