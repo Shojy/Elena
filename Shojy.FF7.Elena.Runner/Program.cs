@@ -56,8 +56,8 @@ namespace Shojy.FF7.Elena.Runner
                 Console.WriteLine($"Bytes: {BitConverter.ToString(btl.GetBytes())}");
             }
 
-            //  Test the alert command
-            var test = new FFText("{ALERT}This is a test!");
+            // Test special commands
+            var test = new FFText("{ALERT}Red {THIRTEEN} says: \"This is a test!\"");
             Console.WriteLine(test);
             Console.WriteLine($"Bytes: {BitConverter.ToString(test.GetBytes())}");
 

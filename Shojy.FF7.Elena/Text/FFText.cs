@@ -222,7 +222,15 @@ namespace Shojy.FF7.Elena.Text
                                 found = true;
                             }
 
-                            if (!found) //alert not found, so check for character names
+                            //alert not found, so check for "XIII" character
+                            if (!found && temp.StartsWith("THIRTEEN"))
+                            {
+                                text.Add(0xE6);
+                                i += 9;
+                                found = true;
+                            }
+
+                            if (!found) //special characters not found, so check for character names
                             {
                                 for (j = 0; j < nameList.Length; ++j)
                                 {
@@ -374,6 +382,10 @@ namespace Shojy.FF7.Elena.Text
                         {
                             text.AddRange("{ALERT}");
                             i++;
+                        }
+                        else if (data[i] == 0xE6) //special "XIII" character
+                        {
+                            text.AddRange("{THIRTEEN}");
                         }
                         else if (data[i] == (byte)TextCommands.Character) //character
                         {
