@@ -465,9 +465,23 @@ namespace Shojy.FF7.Elena.Text
 
         public byte[] GetBytesTruncated()
         {
-            var str = ToString().Trim();
-            var copy = new FFText(str);
-            return copy.GetBytes();
+            bool zero = false;
+            int newLength = 0;
+            for (int i = 0; i < Length; ++i)
+            {
+                if (!zero && data[i] == 0)
+                {
+                    zero = true;
+                    newLength = i;
+                }
+                else if (zero && data[i] != 0)
+                {
+                    zero = false;
+                }
+            }
+            var copy = new byte[newLength];
+            Array.Copy(data, 0, copy, 0, newLength);
+            return copy;
         }
 
         public int CompareTo(object obj)
