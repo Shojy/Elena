@@ -465,22 +465,15 @@ namespace Shojy.FF7.Elena.Text
 
         public byte[] GetBytesTruncated()
         {
-            bool zero = false;
-            int newLength = 0;
-            for (int i = 0; i < Length; ++i)
+            int newLength = Length - 1;
+            for (int i = Length - 2; i >= 0; --i)
             {
-                if (!zero && data[i] == 0)
-                {
-                    zero = true;
-                    newLength = i;
-                }
-                else if (zero && data[i] != 0)
-                {
-                    zero = false;
-                }
+                if (data[i] == 0) {newLength--;}
+                else { break; }
             }
-            var copy = new byte[newLength];
+            var copy = new byte[newLength + 1];
             Array.Copy(data, 0, copy, 0, newLength);
+            copy[newLength] = 0xFF;
             return copy;
         }
 
