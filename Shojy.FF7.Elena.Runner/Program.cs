@@ -57,9 +57,9 @@ namespace Shojy.FF7.Elena.Runner
             }
 
             // Test special commands
-            var test = new FFText("{ALERT}Red {THIRTEEN} says: \"This is a test!\"");
+            var test = new FFText("{ALERT}Red {THIRTEEN} says: \"This is a test!\"    ");
             Console.WriteLine(test);
-            Console.WriteLine($"Bytes: {BitConverter.ToString(test.GetBytes())}");
+            Console.WriteLine($"Bytes: {BitConverter.ToString(test.GetBytesTruncated())}");
 
             // This must have a call to MergeKernel2Data for now. The full dataset has not yet been found.
             // Otherwise this will load the data from active memory instead of the kernel file on disk.
