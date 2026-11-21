@@ -207,9 +207,7 @@ namespace Shojy.FF7.Elena.Text
                 {
                     if (i < str.Length)
                     {
-                        byte b = (byte)str[i];
-
-                        if (b == (byte)'{' && i < length - 1) //variable
+                        if (str[i] == '{' && i < length - 1) //variable
                         {
                             string temp = str.Substring(i + 1);
                             bool found = false;
